@@ -402,7 +402,7 @@
   }
 
   .case-page-hero {
-    padding: 5rem 4rem 4rem;
+    padding: 7rem 4rem 4rem;
     border-bottom: 1px solid var(--rule);
   }
 
@@ -414,12 +414,26 @@
     color: var(--ink-soft);
     cursor: pointer;
     border: none; background: none;
-    margin-bottom: 3rem;
     transition: color 0.2s;
+    padding: 0;
   }
   .back-btn:hover { color: var(--ink); }
   .back-btn svg { transition: transform 0.2s; }
   .back-btn:hover svg { transform: translateX(-3px); }
+
+  .case-back-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 99;
+    display: none;
+    align-items: center;
+    padding: 1.1rem 4rem;
+    background: rgba(245, 242, 238, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .case-back-bar.visible { display: flex; }
+  @media (max-width: 900px) {
+    .case-back-bar { padding: 1rem 1.5rem; }
+  }
 
   .case-page-tag {
     font-size: 0.7rem;
@@ -594,6 +608,14 @@
   </ul>
 </nav>
 
+<!-- Barra fixa de voltar (aparece nas páginas de case) -->
+<div class="case-back-bar" id="caseBackBar">
+  <button class="back-btn" onclick="goHome()">
+    <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 9L1 5L5 1M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to portfolio
+  </button>
+</div>
+
 <!-- ════════════ HOME VIEW ════════════ -->
 <div class="view active" id="view-home">
 
@@ -615,7 +637,7 @@
         <button class="btn-ghost" onclick="scrollToSection('contact')">
           Get in touch
           <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
+  
       </div>
     </div>
   </section>
@@ -847,10 +869,10 @@
 <div class="view" id="view-csat">
   <div class="case-page">
     <div class="case-page-hero">
-      <button class="back-btn" onclick="showView('home')">
-        <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 9L1 5L5 1M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Back to portfolio
-      </button>
+
+
+
+
       <div class="case-page-tag">Top Case · Internal Data Analysis · 2026</div>
       <h1 class="case-page-title">Building a Conversational Quality Culture: From CSAT Analysis to an AI Metrics Architecture</h1>
       <div class="case-page-meta">
@@ -933,10 +955,10 @@
 <div class="view" id="view-onboarding">
   <div class="case-page">
     <div class="case-page-hero">
-      <button class="back-btn" onclick="showView('home')">
-        <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 9L1 5L5 1M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Back to portfolio
-      </button>
+
+
+
+
       <div class="case-page-tag">Top Case · Conversational Design · 2026</div>
       <h1 class="case-page-title">Conversational Design & Onboarding: Redesigning the First Interaction with Conexa AI</h1>
       <div class="case-page-meta">
@@ -1008,10 +1030,10 @@
 <div class="view" id="view-cardsorting">
   <div class="case-page">
     <div class="case-page-hero">
-      <button class="back-btn" onclick="showView('home')">
-        <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 9L1 5L5 1M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Back to portfolio
-      </button>
+
+
+
+
       <div class="case-page-tag">Top Case · Card Sorting Study · 2025</div>
       <h1 class="case-page-title">What Do Physicians Really Need? A Card Sorting Study Across 12 Specialties</h1>
       <div class="case-page-meta">
@@ -1079,14 +1101,14 @@
 <div class="view" id="view-mentalhealth">
   <div class="case-page">
     <div class="case-page-hero">
-      <button class="back-btn" onclick="showView('home')">
-        <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 9L1 5L5 1M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Back to portfolio
-      </button>
+
+
+
+
       <div class="case-page-tag">Expert Interviews · Internal Data Analysis · 2024</div>
       <h1 class="case-page-title">Redesigning Strategic Mental Health Assessments</h1>
       <div class="case-page-meta">
-        <div class="case-page-meta-item"><div class="label">Company</div><div class="val">Conexa</div></div>
+        <div class="case-page-meta-item"><div class="label">Company</div><div class="val">Conexa Group</div></div>
         <div class="case-page-meta-item"><div class="label">Role</div><div class="val">UX Researcher</div></div>
         <div class="case-page-meta-item"><div class="label">Methods</div><div class="val">Internal Data Analysis · Expert & User Interviews</div></div>
       </div>
@@ -1164,14 +1186,14 @@
 <div class="view" id="view-scaling">
   <div class="case-page">
     <div class="case-page-hero">
-      <button class="back-btn" onclick="showView('home')">
-        <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 9L1 5L5 1M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Back to portfolio
-      </button>
+
+
+
+
       <div class="case-page-tag">Research Ops · 2025</div>
       <h1 class="case-page-title">Scaling UX Research: Building the Research Structure, Process and Infrastructure Across Product Design</h1>
       <div class="case-page-meta">
-        <div class="case-page-meta-item"><div class="label">Company</div><div class="val">Conexa</div></div>
+        <div class="case-page-meta-item"><div class="label">Company</div><div class="val">Conexa Group</div></div>
         <div class="case-page-meta-item"><div class="label">Role</div><div class="val">UX Researcher</div></div>
         <div class="case-page-meta-item"><div class="label">Method</div><div class="val">Research Ops</div></div>
       </div>
@@ -1198,20 +1220,27 @@
 </div>
 
 <script>
-  // ─── View management ───
-  function showView(name) {
+  const caseBackBar = document.getElementById('caseBackBar');
+
+  // ─── View management com History API ───
+  function showView(name, pushState = true) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     const target = document.getElementById('view-' + name);
-    if (target) {
-      target.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      // Update nav links for case pages
-      const navLinks = document.querySelectorAll('.nav-links a');
-      navLinks.forEach(a => {
-        a.onclick = name === 'home'
-          ? (e => { e.preventDefault(); scrollToSection(a.href.split('#')[1] || 'cases'); })
-          : (e => { e.preventDefault(); showView('home'); });
-      });
+    if (!target) return;
+    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Barra fixa de voltar
+    if (name === 'home') {
+      caseBackBar.classList.remove('visible');
+    } else {
+      caseBackBar.classList.add('visible');
+    }
+
+    // History API
+    if (pushState) {
+      const url = name === 'home' ? '/' + window.location.pathname.split('/')[1] : '#' + name;
+      history.pushState({ view: name }, '', url);
     }
   }
 
@@ -1219,13 +1248,42 @@
     showView(id);
   }
 
-  function scrollToSection(id) {
+  function goHome() {
     showView('home');
-    setTimeout(() => {
+  }
+
+  function scrollToSection(id) {
+    if (document.getElementById('view-home').classList.contains('active')) {
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 50);
+    } else {
+      showView('home');
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 80);
+    }
   }
+
+  // ─── Botão voltar do browser ───
+  window.addEventListener('popstate', (e) => {
+    const view = e.state?.view || 'home';
+    showView(view, false);
+  });
+
+  // Estado inicial
+  history.replaceState({ view: 'home' }, '', window.location.href);
+
+  // ─── Nav links ───
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const sections = { Work: 'cases', About: 'about', Experience: 'experience', Contact: 'contact' };
+      const label = a.textContent.trim();
+      const sectionId = sections[label];
+      if (sectionId) scrollToSection(sectionId);
+    });
+  });
 
   // ─── Scroll effects ───
   const nav = document.getElementById('nav');
@@ -1245,21 +1303,11 @@
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-  // ─── Nav links setup ───
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      const href = a.getAttribute('href');
-    });
-  });
-
-  // Trigger initial fade-up check
+  // Trigger inicial
   setTimeout(() => {
     document.querySelectorAll('.fade-up').forEach(el => {
       const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
-        el.classList.add('visible');
-      }
+      if (rect.top < window.innerHeight) el.classList.add('visible');
     });
   }, 100);
 </script>
