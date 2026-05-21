@@ -52,6 +52,7 @@
     color: var(--ink);
     text-decoration: none;
     cursor: pointer;
+    white-space: nowrap;
   }
 
   .nav-links {
@@ -66,6 +67,53 @@
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--ink); }
+
+  /* ─── HAMBURGER ─── */
+  .hamburger {
+    display: none;
+    flex-direction: column; justify-content: center; gap: 5px;
+    width: 28px; height: 28px;
+    cursor: pointer;
+    border: none; background: none; padding: 0;
+    z-index: 101;
+  }
+  .hamburger span {
+    display: block; width: 100%; height: 1.5px;
+    background: var(--ink);
+    transition: transform 0.3s, opacity 0.3s;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* ─── MOBILE MENU ─── */
+  .mobile-menu {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 99;
+    background: var(--bg);
+    flex-direction: column; justify-content: center; align-items: center;
+    gap: 2.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--accent); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .breadcrumb-bar { padding: 0.5rem 1.5rem; }
+  }
 
   /* ─── VIEWS ─── */
   .view { display: none; }
@@ -631,7 +679,18 @@
     <li><a href="#" onclick="scrollToSection('experience')">Experience</a></li>
     <li><a href="#" onclick="scrollToSection('contact')">Contact</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Menu mobile -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="closeMenuAndGo('cases')">Work</a>
+  <a href="#" onclick="closeMenuAndGo('about')">About</a>
+  <a href="#" onclick="closeMenuAndGo('experience')">Experience</a>
+  <a href="#" onclick="closeMenuAndGo('contact')">Contact</a>
+</div>
 
 <!-- Breadcrumb bar (aparece nas páginas de case) -->
 <div class="breadcrumb-bar" id="breadcrumbBar">
@@ -1308,6 +1367,20 @@
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 80);
     }
+  }
+
+  // ─── Hamburger menu ───
+  function toggleMenu() {
+    const h = document.getElementById('hamburger');
+    const m = document.getElementById('mobileMenu');
+    h.classList.toggle('open');
+    m.classList.toggle('open');
+  }
+
+  function closeMenuAndGo(section) {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('mobileMenu').classList.remove('open');
+    scrollToSection(section);
   }
 
   // ─── Botão voltar do browser ───
