@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jade Goes — UX Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F2EE;
+    --surface: #EEEBE5;
+    --ink: #1A1714;
+    --ink-soft: #6B6660;
+    --accent: #2D4A3E;
+    --accent-warm: #8B6F47;
+    --rule: #D4CFC8;
+    --white: #FDFCFB;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 4rem;
+    background: rgba(245, 242, 238, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  nav.scrolled { border-color: var(--rule); }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* ─── VIEWS ─── */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%; left: -0.05em;
+    transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(8rem, 18vw, 22rem);
+    font-weight: 300;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--rule);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 65rem; }
+
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 2.5rem; height: 1px;
+    background: var(--accent-warm);
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 7rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    color: var(--ink-soft);
+    max-width: 38rem;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  .hero-cta-group { display: flex; gap: 1.5rem; align-items: center; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background 0.25s, transform 0.2s;
+  }
+  .btn-primary:hover { background: #1e3329; transform: translateY(-1px); }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none; cursor: pointer;
+    border: none; background: none;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--ink); }
+  .btn-ghost svg { transition: transform 0.2s; }
+  .btn-ghost:hover svg { transform: translateX(3px); }
+
+  /* ─── ABOUT ─── */
+  .section {
+    padding: 7rem 4rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .section-header {
+    display: flex; align-items: baseline; gap: 2rem;
+    margin-bottom: 4rem;
+  }
+  .section-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--accent-warm);
+    letter-spacing: 0.05em;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .about-sidebar {}
+  .about-sidebar .label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+  }
+  .about-sidebar .value {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  .about-sidebar a { color: var(--accent); text-decoration: none; }
+  .about-sidebar a:hover { text-decoration: underline; }
+
+  .about-body p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .about-body p:last-child { margin-bottom: 0; }
+  .about-body strong { font-weight: 500; }
+
+  /* ─── CASES ─── */
+  .cases-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+  }
+
+  .case-card {
+    padding: 2.5rem;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .case-card:nth-child(2n) { border-right: none; }
+  .case-card:hover { background: var(--surface); }
+
+  .case-meta {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+
+  .case-tag {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--rule);
+    color: var(--ink-soft);
+    margin-bottom: 1.25rem;
+    margin-right: 0.4rem;
+  }
+  .case-tag.top { border-color: var(--accent); color: var(--accent); }
+
+  .case-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .case-desc {
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+
+  .case-arrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    transition: gap 0.2s;
+  }
+  .case-card:hover .case-arrow { gap: 0.75rem; }
+
+  /* ─── SKILLS ─── */
+  .skills-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem 4rem;
+  }
+
+  .skill-group-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .skill-item {
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid transparent;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .skill-item::before {
+    content: '';
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ─── EXPERIENCE ─── */
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .exp-item:first-child { border-top: 1px solid var(--rule); }
+
+  .exp-date { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.6; }
+  .exp-date strong { display: block; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+
+  .exp-role { font-size: 1rem; }
+  .exp-role strong { font-weight: 500; display: block; margin-bottom: 0.2rem; }
+  .exp-role em { font-style: normal; font-size: 0.875rem; color: var(--ink-soft); }
+
+  /* ─── EDUCATION ─── */
+  .edu-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--rule);
+  }
+  .edu-col {
+    padding: 3rem;
+    border-right: 1px solid var(--rule);
+  }
+  .edu-col:last-child { border-right: none; }
+  .edu-col-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    margin-bottom: 2rem;
+  }
+  .edu-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .edu-item:first-of-type { padding-top: 0; }
+  .edu-item:last-child { border-bottom: none; }
+  .edu-item strong { display: block; font-weight: 500; margin-bottom: 0.2rem; }
+  .edu-item span { font-size: 0.875rem; color: var(--ink-soft); }
+
+  /* ─── CONTACT ─── */
+  .contact-row {
+    display: flex; gap: 0;
+    border: 1px solid var(--rule);
+  }
+  .contact-item {
+    flex: 1;
+    padding: 2.5rem;
+    border-right: 1px solid var(--rule);
+    text-decoration: none; color: inherit;
+    transition: background 0.2s;
+  }
+  .contact-item:last-child { border-right: none; }
+  .contact-item:hover { background: var(--surface); }
+  .contact-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.75rem;
+  }
+  .contact-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  /* ─── CASE PAGE ─── */
+  .case-page {
+    padding-top: 6rem;
+  }
+
+  .case-page-hero {
+    padding: 5rem 4rem 4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border: none; background: none;
+    margin-bottom: 3rem;
+    transition: color 0.2s;
+  }
+  .back-btn:hover { color: var(--ink); }
+  .back-btn svg { transition: transform 0.2s; }
+  .back-btn:hover svg { transform: translateX(-3px); }
+
+  .case-page-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    margin-bottom: 1.5rem;
+  }
+
+  .case-page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4.5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 55rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .case-page-meta {
+    display: flex; gap: 3rem; flex-wrap: wrap;
+  }
+  .case-page-meta-item {}
+  .case-page-meta-item .label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.25rem;
+  }
+  .case-page-meta-item .val {
+    font-size: 0.9rem;
+  }
+
+  .case-page-body {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 5rem 4rem;
+  }
+
+  .case-section {
+    margin-bottom: 5rem;
+  }
+  .case-section:last-child { margin-bottom: 0; }
+
+  .case-section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+    letter-spacing: -0.01em;
+  }
+
+  .case-two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+  }
+
+  .case-text { font-size: 1rem; line-height: 1.8; color: var(--ink); }
+  .case-text + .case-text { margin-top: 1.25rem; }
+  .case-text strong { font-weight: 500; }
+
+  .finding-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    padding: 1.75rem;
+    margin-bottom: 1rem;
+  }
+  .finding-card p { font-size: 0.925rem; line-height: 1.7; }
+  .finding-card strong { font-weight: 500; }
+
+  .highlight-list { list-style: none; padding: 0; }
+  .highlight-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.9rem;
+    display: flex; gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .highlight-list li::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 0.1em;
+  }
+
+  .metric-block {
+    background: var(--accent);
+    color: var(--white);
+    padding: 2rem;
+    margin-bottom: 1rem;
+  }
+  .metric-block .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .metric-block .desc { font-size: 0.85rem; opacity: 0.85; line-height: 1.5; }
+
+  .layer-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .layer-card .layer-title {
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+  }
+  .layer-card p { font-size: 0.875rem; color: var(--ink-soft); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 2.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size: 0.8rem; color: var(--ink-soft); }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .section { padding: 5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .cases-grid { grid-template-columns: 1fr; }
+    .case-card:nth-child(2n) { border-right: 1px solid var(--rule); }
+    .skills-cols { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .edu-col { border-right: none; border-bottom: 1px solid var(--rule); }
+    .edu-col:last-child { border-bottom: none; }
+    .contact-row { flex-direction: column; }
+    .contact-item { border-right: none; border-bottom: 1px solid var(--rule); }
+    .contact-item:last-child { border-bottom: none; }
+    .case-page-body { padding: 3rem 1.5rem; }
+    .case-two-col { grid-template-columns: 1fr; gap: 2rem; }
+    .case-page-hero { padding: 4rem 1.5rem 3rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
+    .nav-links { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <span class="nav-logo" onclick="showView('home')">Jade Goes</span>
+  <ul class="nav-links">
+    <li><a href="#" onclick="scrollToSection('cases')">Work</a></li>
+    <li><a href="#" onclick="scrollToSection('about')">About</a></li>
+    <li><a href="#" onclick="scrollToSection('experience')">Experience</a></li>
+    <li><a href="#" onclick="scrollToSection('contact')">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ════════════ HOME VIEW ════════════ -->
+<div class="view active" id="view-home">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-text">Research</div>
+    <div class="hero-content">
+      <div class="hero-eyebrow fade-up">UX Researcher · Product Designer · Rio de Janeiro</div>
+      <h1 class="hero-name fade-up" style="transition-delay:0.1s">
+        Hey, I'm<br><em>Jade Goes.</em>
+      </h1>
+      <p class="hero-subtitle fade-up" style="transition-delay:0.2s">
+        I work at the intersection of people, behavior, and complex systems — bringing research depth to product decisions that actually matter.
+      </p>
+      <div class="hero-cta-group fade-up" style="transition-delay:0.3s">
+        <button class="btn-primary" onclick="scrollToSection('cases')">View my work</button>
+        <button class="btn-ghost" onclick="scrollToSection('contact')">
+          Get in touch
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="section-header fade-up">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About <em>me</em></h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-sidebar fade-up">
+        <div class="label">Location</div>
+        <div class="value">Rio de Janeiro, RJ</div>
+        <div class="label">Current role</div>
+        <div class="value">Senior UX Researcher<br><span style="font-size:0.85rem;color:var(--ink-soft)">Conexa Group · since Sept 2023</span></div>
+        <div class="label">Also at</div>
+        <div class="value">UX Researcher<br><span style="font-size:0.85rem;color:var(--ink-soft)">Dasa · since May 2022</span></div>
+        <div class="label">LinkedIn</div>
+        <div class="value"><a href="https://www.linkedin.com/in/jade-goes-998a7412a/" target="_blank">jade-goes →</a></div>
+      </div>
+      <div class="about-body fade-up" style="transition-delay:0.1s">
+        <p>From a passion for understanding people and their behavior, I built my career at the intersection of <strong>UX Research, Product Design, and complex systems</strong>. Within this space, I've been able to apply my interdisciplinary background to create experiences that meaningfully impact people's everyday lives.</p>
+        <p>Over the past 6 years, I've worked across different roles in digital product design, starting as a <strong>UI Designer</strong> and later as a <strong>Product Designer</strong>. For the past 4 years, I've been working as a <strong>UX Researcher</strong>, leading research initiatives and bringing a strong behavioral perspective to product and strategic decisions.</p>
+        <p>I've always been drawn to complex problems, which naturally led my attention toward the rise of <strong>AI systems — a space where I've been actively working in recent projects</strong>. To me, AI is not just a new technology, but another complex and systemic challenge: one that requires rethinking how people interact with, interpret, and build trust in digital systems.</p>
+        <p>Nowadays, I seek opportunities with <strong>purpose</strong>, where I can continue to grow in environments that value people, sustainability, and a strong design culture.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASES -->
+  <section class="section" id="cases">
+    <div class="section-header fade-up">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Selected <em>work</em></h2>
+    </div>
+    <div class="cases-grid fade-up" style="transition-delay:0.1s">
+
+      <div class="case-card" onclick="showCase('csat')">
+        <div><span class="case-tag top">Top case</span><span class="case-tag">Internal Data Analysis</span></div>
+        <div class="case-meta">Conexa · 2026 · 1 sprint</div>
+        <h3 class="case-title">Building a Conversational Quality Culture: From CSAT Analysis to an AI Metrics Architecture</h3>
+        <p class="case-desc">Turned a raw satisfaction dataset into a diagnostic framework and a 4-layer causal metrics architecture that now guides how Conexa measures conversational quality.</p>
+        <span class="case-arrow">Read case <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+
+      <div class="case-card" onclick="showCase('onboarding')">
+        <div><span class="case-tag top">Top case</span><span class="case-tag">Conversational Design</span></div>
+        <div class="case-meta">Conexa · 2026 · 2 sprints</div>
+        <h3 class="case-title">Conversational Design & Onboarding: Redesigning the First Interaction with Conexa AI</h3>
+        <p class="case-desc">Analyzed 1,000 real conversations to uncover that 80%+ of users already knew what they needed — and used this to design an intent-first onboarding experience.</p>
+        <span class="case-arrow">Read case <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+
+      <div class="case-card" onclick="showCase('cardsorting')">
+        <div><span class="case-tag top">Top case</span><span class="case-tag">Survey · Card Sorting</span></div>
+        <div class="case-meta">Conexa · 2025 · 1 sprint</div>
+        <h3 class="case-title">What Do Physicians Really Need? A Card Sorting Study Across 12 Specialties</h3>
+        <p class="case-desc">Led a card sorting study with 35 physicians revealing that specialty-based personalization alone is insufficient — and that individual customization has 3x more impact.</p>
+        <span class="case-arrow">Read case <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+
+      <div class="case-card" onclick="showCase('mentalhealth')">
+        <div><span class="case-tag">Expert Interviews · Internal Data</span></div>
+        <div class="case-meta">Dasa · 2024</div>
+        <h3 class="case-title">Redesigning Strategic Mental Health Assessments</h3>
+        <p class="case-desc">Investigated how patients perceive and emotionally experience mental health assessments on a health platform, leading to a redesigned, warmer journey.</p>
+        <span class="case-arrow">Read case <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+
+      <div class="case-card" onclick="showCase('scaling')">
+        <div><span class="case-tag">Research Ops</span></div>
+        <div class="case-meta">Dasa · 2025</div>
+        <h3 class="case-title">Scaling UX Research: Building the Research Structure, Process and Infrastructure</h3>
+        <p class="case-desc">Built the UX Research practice inside the Product Design team from the ground up — creating processes, a research repository, tooling ecosystem, and mentorship program.</p>
+        <span class="case-arrow">Read case <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section" id="skills">
+    <div class="section-header fade-up">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Skills <em>&amp; Tools</em></h2>
+    </div>
+    <div class="skills-cols fade-up" style="transition-delay:0.1s">
+      <div>
+        <div class="skill-group-title">Core Competencies</div>
+        <div class="skill-item">User Research</div>
+        <div class="skill-item">Information Architecture</div>
+        <div class="skill-item">Design Methodologies</div>
+        <div class="skill-item">Workshop Facilitation</div>
+        <div class="skill-item">Product & Business Strategy</div>
+        <div class="skill-item">Marketing Principles</div>
+        <div class="skill-item">UI Design & Prototyping</div>
+      </div>
+      <div>
+        <div class="skill-group-title">Soft Skills</div>
+        <div class="skill-item">Leadership</div>
+        <div class="skill-item">Communication</div>
+        <div class="skill-item">Collaboration</div>
+        <div class="skill-item">Organization</div>
+        <div class="skill-item">Self-management</div>
+        <div class="skill-item">Fast learning</div>
+      </div>
+      <div>
+        <div class="skill-group-title">Tools</div>
+        <div class="skill-item">Figma</div>
+        <div class="skill-item">Miro</div>
+        <div class="skill-item">Dovetail</div>
+        <div class="skill-item">Notion</div>
+        <div class="skill-item">Excel</div>
+        <div class="skill-item">Adobe Illustrator</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience">
+    <div class="section-header fade-up">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Work <em>experience</em></h2>
+    </div>
+    <div class="exp-list fade-up" style="transition-delay:0.1s">
+      <div class="exp-item">
+        <div class="exp-date"><strong>Sept 2023 → Now</strong>Conexa Group</div>
+        <div class="exp-role"><strong>Senior User Researcher</strong><em>Healthcare Tech · Rio de Janeiro</em></div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date"><strong>May 2022 → Now</strong>Dasa</div>
+        <div class="exp-role"><strong>User Researcher</strong><em>Healthcare · Rio de Janeiro</em></div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date"><strong>Aug 2021 → May 2022</strong>Saúde ID</div>
+        <div class="exp-role"><strong>Product Designer</strong><em>Health Tech</em></div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date"><strong>Feb 2021 → Aug 2021</strong>Unimed-Rio</div>
+        <div class="exp-role"><strong>UX Designer</strong><em>Health Insurance</em></div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date"><strong>Sept 2020 → Feb 2021</strong>Odzaine Studio</div>
+        <div class="exp-role"><strong>UX/UI Designer</strong><em>Design Studio</em></div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date"><strong>Oct 2020 → Dec 2020</strong>Multiplicar Investimentos</div>
+        <div class="exp-role"><strong>UI Designer</strong><em>Fintech</em></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section" id="education">
+    <div class="section-header fade-up">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Education &amp; <em>Training</em></h2>
+    </div>
+    <div class="edu-grid fade-up" style="transition-delay:0.1s">
+      <div class="edu-col">
+        <div class="edu-col-title">Academic</div>
+        <div class="edu-item">
+          <strong>MS in Product Management</strong>
+          <span>BBI of Chicago and Celso Lisboa · 2023</span>
+        </div>
+        <div class="edu-item">
+          <strong>Bachelor in Advertising & Marketing</strong>
+          <span>ESPM Rio · 2020</span>
+        </div>
+      </div>
+      <div class="edu-col">
+        <div class="edu-col-title">Courses & Bootcamps</div>
+        <div class="edu-item">
+          <strong>Behavioral Research Methodologies</strong>
+          <span>Box 1824 · 2023</span>
+        </div>
+        <div class="edu-item">
+          <strong>Quantitative Research</strong>
+          <span>Di School (Diogo Cortiz) · 2023</span>
+        </div>
+        <div class="edu-item">
+          <strong>UX Research · Service Design Thinking · Workshop Facilitation</strong>
+          <span>How Bootcamps with Karla Cruz · 2021</span>
+        </div>
+        <div class="edu-item">
+          <strong>Design System and Ops</strong>
+          <span>Meiuca · 2021</span>
+        </div>
+        <div class="edu-item">
+          <strong>Research and Innovation Tools</strong>
+          <span>Perestroika · 2020</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="section-header fade-up">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Let's <em>talk</em></h2>
+    </div>
+    <div class="contact-row fade-up" style="transition-delay:0.1s">
+      <a class="contact-item" href="https://www.linkedin.com/in/jade-goes-998a7412a/" target="_blank">
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-value">jade-goes →</div>
+      </a>
+      <a class="contact-item" href="https://api.whatsapp.com/send?phone=5521995373614" target="_blank">
+        <div class="contact-label">WhatsApp</div>
+        <div class="contact-value">+55 21 99537-3614</div>
+      </a>
+      <a class="contact-item" href="mailto:jadecrgoes7@gmail.com">
+        <div class="contact-label">Email</div>
+        <div class="contact-value">jadecrgoes7@gmail.com</div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Jade Goes · UX Researcher</p>
+    <p>Rio de Janeiro, RJ</p>
+  </footer>
+
+</div><!-- /view-home -->
+
+
+<!-- ════════════ CASE: CSAT ════════════ -->
+<div class="view" id="view-csat">
+  <div class="case-page">
+    <div class="case-page-hero">
+      <button class="back-btn" onclick="showView('home')">
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 9L1 5L5 1M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to portfolio
+      </button>
+      <div class="case-page-tag">Top Case · Internal Data Analysis · 2026</div>
+      <h1 class="case-page-title">Building a Conversational Quality Culture: From CSAT Analysis to an AI Metrics Architecture</h1>
+      <div class="case-page-meta">
+        <div class="case-page-meta-item"><div class="label">Company</div><div class="val">Conexa Group</div></div>
+        <div class="case-page-meta-item"><div class="label">Industry</div><div class="val">Healthcare Tech</div></div>
+        <div class="case-page-meta-item"><div class="label">Role</div><div class="val">UX Researcher</div></div>
+        <div class="case-page-meta-item"><div class="label">Duration</div><div class="val">1 sprint</div></div>
+        <div class="case-page-meta-item"><div class="label">Year</div><div class="val">2026</div></div>
+      </div>
+    </div>
+
+    <div class="case-page-body">
+      <div class="case-section">
+        <div class="case-two-col">
+          <div>
+            <h2 class="case-section-title">The Context</h2>
+            <p class="case-text">As Conexa AI matured as a product, a critical gap emerged: the team had satisfaction data, but no structured way to understand <em>why</em> the experience was failing — or succeeding. CSAT scores existed, but the signal was noisy and the path from data to decision was unclear.</p>
+            <p class="case-text">This case documents how I turned a raw satisfaction dataset into a diagnostic research framework, and from there, into a causal metrics architecture that now guides how Conexa measures conversational quality.</p>
+          </div>
+          <div>
+            <h2 class="case-section-title">The Research Question</h2>
+            <p class="case-text">How do we move from reactive satisfaction monitoring to proactive conversational quality management — and what does it take to build the infrastructure to get there?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Phase 1 — Diagnosing the CSAT</h2>
+        <p class="case-text" style="margin-bottom:2rem">I led an analysis of CSAT responses collected over three months (Jan–Mar 2026), combining quantitative data with qualitative analysis of open comments. Analysis was conducted with AI assistance (Claude Opus 4.6).</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem">
+          <div class="metric-block"><div class="num">85%</div><div class="desc">of comments were noise — unrelated to the AI conversational experience itself</div></div>
+          <div class="metric-block" style="background:var(--accent-warm)"><div class="num">3 pts</div><div class="desc">gap in rating between users who got their problem solved and those who didn't</div></div>
+          <div class="metric-block" style="background:var(--ink)"><div class="num">r=0.79</div><div class="desc">correlation between resolutivity and satisfaction — the dominant driver</div></div>
+        </div>
+        <p class="case-text">The first finding was methodological: we couldn't accurately evaluate the AI's experience because we weren't isolating it from the service layer. One of the immediate recommendations was to redesign the CSAT survey to separate AI experience from platform and service evaluation.</p>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Phase 2 — The Non-Obvious Insight</h2>
+        <p class="case-text" style="margin-bottom:2rem">I conducted a deep-dive comparison between two conversations with extreme ratings — one CSAT 1, one CSAT 5 — both with users who commented specifically on the AI's communication style.</p>
+        <div class="finding-card">
+          <p><strong>The surface-level read:</strong> one user found the AI warm and empathetic, the other cold and robotic. Both conversations used the same linguistic repertoire — emojis, name-based greetings, closing phrases.</p>
+        </div>
+        <div class="finding-card">
+          <p><strong>What the data actually showed:</strong> The difference wasn't tone — it was competence and contextual calibration. Perceived artificiality in conversational AI is not primarily a language problem — it is a symptom of performance failure.</p>
+        </div>
+        <p class="case-text" style="margin-top:1.5rem">This insight reframed the product direction: before investing in tone adjustments, the priority should be resolving the structural failures that make tone irrelevant.</p>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Phase 3 — From Insight to Architecture</h2>
+        <p class="case-text" style="margin-bottom:2rem">I designed a 4-layer causal metrics architecture that maps the chain of causality in a conversational interaction:</p>
+        <div class="layer-card">
+          <div class="layer-title">Layer 1 — Understanding</div>
+          <p>Did the AI correctly interpret what the user wanted? · Intent Match Rate · Context Utilization Rate · Clarification Rate</p>
+        </div>
+        <div class="layer-card">
+          <div class="layer-title">Layer 2 — Decision Quality</div>
+          <p>Did the AI take the right action for that context? · Misrouting Rate · Override Failure Rate</p>
+        </div>
+        <div class="layer-card">
+          <div class="layer-title">Layer 3 — Conversation Efficiency</div>
+          <p>Did the user reach their goal directly? · Task Completion Rate · Turns to Resolution · Drop-off Rate · Loop Detection Rate</p>
+        </div>
+        <div class="layer-card">
+          <div class="layer-title">Layer 4 — Perceived Outcome</div>
+          <p>How did the user experience the interaction overall? · CSAT (redesigned) · Resolutivity · Perceived Latency</p>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Status & Next Steps</h2>
+        <p class="case-text">The metrics architecture was delivered in April 2026 and is currently in instrumentation. Once live, it will enable the team to move from reactive CSAT monitoring to proactive conversational quality management — identifying where the experience breaks before it surfaces in satisfaction scores.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ CASE: ONBOARDING ════════════ -->
+<div class="view" id="view-onboarding">
+  <div class="case-page">
+    <div class="case-page-hero">
+      <button class="back-btn" onclick="showView('home')">
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 9L1 5L5 1M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to portfolio
+      </button>
+      <div class="case-page-tag">Top Case · Conversational Design · 2026</div>
+      <h1 class="case-page-title">Conversational Design & Onboarding: Redesigning the First Interaction with Conexa AI</h1>
+      <div class="case-page-meta">
+        <div class="case-page-meta-item"><div class="label">Company</div><div class="val">Conexa Group</div></div>
+        <div class="case-page-meta-item"><div class="label">Role</div><div class="val">AI Content Designer</div></div>
+        <div class="case-page-meta-item"><div class="label">Duration</div><div class="val">2 sprints</div></div>
+        <div class="case-page-meta-item"><div class="label">Methods</div><div class="val">Conversation Analysis · Benchmarking · Intent Matrix</div></div>
+      </div>
+    </div>
+
+    <div class="case-page-body">
+      <div class="case-section">
+        <div class="case-two-col">
+          <div>
+            <h2 class="case-section-title">What is Conexa AI</h2>
+            <p class="case-text">Conexa AI is a 24/7 virtual health assistant designed to integrate, organize, and accompany the full patient health journey. It connects people to the care they already have and the care they still need — bringing benefits, professionals, and health history into one place.</p>
+          </div>
+          <div>
+            <h2 class="case-section-title">The Problem</h2>
+            <p class="case-text">The original onboarding experience was creating unnecessary friction from the very first interaction. It was overloaded with information, poorly contextualized, and demanded login before the user had even expressed a need — a pattern that went directly against the behavior of real users.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Research — Analyzing 1,000 Real Conversations</h2>
+        <p class="case-text" style="margin-bottom:2rem">Before any design decision, I conducted a behavioral analysis of 1,000 initial conversations (10,000 messages) between users and Conexa AI (Feb–Mar 2026) with AI assistance.</p>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem">
+          <div class="metric-block"><div class="num">~48%</div><div class="desc">Administrative intent — scheduling, documents, support</div></div>
+          <div class="metric-block" style="background:var(--accent-warm)"><div class="num">~35%</div><div class="desc">Clinical intent — describing symptoms, seeking guidance</div></div>
+          <div class="metric-block" style="background:var(--ink)"><div class="num">~15%</div><div class="desc">Exploratory — no clear intent, generic greetings</div></div>
+          <div class="metric-block" style="background:#6B6660"><div class="num">2–5%</div><div class="desc">Emergency situations requiring immediate redirection</div></div>
+        </div>
+        <div class="finding-card">
+          <p><strong>The key insight:</strong> Over 80% of users already know what they need when they open the conversation. For them, a structured, explanatory onboarding creates friction — not value.</p>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">The Design Strategy</h2>
+        <p class="case-text" style="margin-bottom:1.5rem">Based on the research, I defined the foundational principle of the new experience: <strong>Intent-First Interaction</strong> — instead of the traditional onboarding-first model.</p>
+        <ul class="highlight-list">
+          <li>Always respond to intent first — the AI prioritizes identifying and responding to the user's need from the very first message</li>
+          <li>Encourage authentication contextually — it appears only when the requested action actually requires it, framed as a natural step to fulfill the user's need</li>
+        </ul>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Architecture & Intent Matrix</h2>
+        <p class="case-text" style="margin-bottom:1.5rem">The system is built on two layers:</p>
+        <div class="finding-card">
+          <p><strong>Session Layer</strong> — builds context by aggregating five dimensions: identity, entry type (new/returning/lapsed), usage history, eligibility, and health data. Output: a Session Context Object.</p>
+        </div>
+        <div class="finding-card">
+          <p><strong>Intent Router</strong> — receives the Session Context Object + user's first message, detects intent, and determines which conversational flow to activate — including tone, format, and authentication timing.</p>
+        </div>
+        <p class="case-text" style="margin-top:1.5rem">From this architecture, I mapped <strong>33 distinct scenarios</strong> across 7 intent groups — covering every meaningful combination of authentication status, user recurrence, and intent type.</p>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Next Steps</h2>
+        <p class="case-text">The conversational design and architecture are complete, fully documented, and aligned with the development team. Once live, we'll track acceptance rates, drop-off patterns, and authentication conversion to validate the intent-first hypothesis quantitatively.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ CASE: CARD SORTING ════════════ -->
+<div class="view" id="view-cardsorting">
+  <div class="case-page">
+    <div class="case-page-hero">
+      <button class="back-btn" onclick="showView('home')">
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 9L1 5L5 1M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to portfolio
+      </button>
+      <div class="case-page-tag">Top Case · Card Sorting Study · 2025</div>
+      <h1 class="case-page-title">What Do Physicians Really Need? A Card Sorting Study Across 12 Specialties</h1>
+      <div class="case-page-meta">
+        <div class="case-page-meta-item"><div class="label">Company</div><div class="val">Conexa Group</div></div>
+        <div class="case-page-meta-item"><div class="label">Role</div><div class="val">UX Researcher</div></div>
+        <div class="case-page-meta-item"><div class="label">Method</div><div class="val">Card Sorting (MoSCoW)</div></div>
+        <div class="case-page-meta-item"><div class="label">Participants</div><div class="val">35 physicians · 12 specialties</div></div>
+      </div>
+    </div>
+
+    <div class="case-page-body">
+      <div class="case-section">
+        <div class="case-two-col">
+          <div>
+            <h2 class="case-section-title">The Context</h2>
+            <p class="case-text">The medical record (prontuário) is one of the most strategic and friction-heavy flows in Conexa's physician platform. Complaints were consistent — too many fields, poor organization, and a layout that didn't reflect how different specialists actually work.</p>
+          </div>
+          <div>
+            <h2 class="case-section-title">The Research Question</h2>
+            <p class="case-text">Is there a solid evidence base for building specialty-specific medical record templates, with fields ordered according to their practical clinical relevance?</p>
+            <p class="case-text">The initial hypothesis: it would be possible to build optimized record models by specialty. The research set out to validate — or refute — that assumption with concrete evidence.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Method</h2>
+        <p class="case-text">I designed and led a closed, unmoderated card sorting study with 35 physicians across 12 specialties (General Practice, Psychiatry, Family Medicine, Endocrinology, Orthopedics, Pediatrics, and more). Each participant categorized 27 medical record fields using a priority framework inspired by the MoSCoW method. Data analysis was conducted with AI assistance (Gemini 2.5).</p>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Key Findings</h2>
+        <ul class="highlight-list">
+          <li>Only <strong>3 fields</strong> achieved universal consensus (&gt;80%) across all specialties: Medical History (HDA), Prescription, and Clinical Conduct</li>
+          <li><strong>82.9%</strong> of physicians considered CIAP 2 unnecessary — a field present in the default layout</li>
+          <li><strong>66.7% of fields</strong> showed high variation between specialties, making a one-size-fits-all model structurally inviable</li>
+          <li><strong>100% of specialties</strong> showed significant internal disagreement — even within the same specialty, physicians diverge on what matters</li>
+          <li>The most extreme case: in General Practice, one physician considered ~85% of fields essential while another considered only ~30% — a 55% gap within the same specialty</li>
+        </ul>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">The Strategic Insight</h2>
+        <p class="case-text" style="margin-bottom:1.5rem">Specialty-based personalization alone is insufficient. A modular architecture is the only scalable solution:</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem">
+          <div class="metric-block" style="background:#2D4A3E"><div class="num">3</div><div class="desc">Fixed universal core fields: HDA, Prescription, Clinical Conduct</div></div>
+          <div class="metric-block" style="background:#8B6F47"><div class="num">~12</div><div class="desc">Specialty-suggested optional fields (template starting point)</div></div>
+          <div class="metric-block" style="background:#1A1714"><div class="num">3×</div><div class="desc">More impact from individual vs. specialty-based personalization</div></div>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Impact on Product Decisions</h2>
+        <ul class="highlight-list">
+          <li>Served as the evidence base for specialty template construction, defining which fields to include by default per specialty</li>
+          <li>Was a key input in the decision not to rely solely on specialty personalization, pushing toward individual customization as the primary model</li>
+          <li>Shaped the field ordering logic in the new medical record layout, based on clinical relevance by specialty rather than a generic hierarchy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ CASE: MENTAL HEALTH ════════════ -->
+<div class="view" id="view-mentalhealth">
+  <div class="case-page">
+    <div class="case-page-hero">
+      <button class="back-btn" onclick="showView('home')">
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 9L1 5L5 1M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to portfolio
+      </button>
+      <div class="case-page-tag">Expert Interviews · Internal Data Analysis · 2024</div>
+      <h1 class="case-page-title">Redesigning Strategic Mental Health Assessments</h1>
+      <div class="case-page-meta">
+        <div class="case-page-meta-item"><div class="label">Company</div><div class="val">Dasa</div></div>
+        <div class="case-page-meta-item"><div class="label">Role</div><div class="val">UX Researcher</div></div>
+        <div class="case-page-meta-item"><div class="label">Methods</div><div class="val">Internal Data Analysis · Expert & User Interviews</div></div>
+      </div>
+    </div>
+
+    <div class="case-page-body">
+      <div class="case-section">
+        <div class="case-two-col">
+          <div>
+            <h2 class="case-section-title">The Context</h2>
+            <p class="case-text">The company's strategic focus was the unification of platforms and mental health services. Within this context, it became essential to reconstruct the mental health stratification process to ensure a complete migration of the service while maintaining a functional journey.</p>
+          </div>
+          <div>
+            <h2 class="case-section-title">Main Objective</h2>
+            <p class="case-text">Understand how patients perceive, interact with, and feel when completing, tracking, and accessing their mental health assessments on the health platform — and adjust the experience to minimize negative impacts and design a warmer experience for this stage of the journey.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Methodology</h2>
+        <p class="case-text" style="margin-bottom:1.5rem">Two research phases, designed to build hypotheses cost-effectively and then validate them:</p>
+        <div class="finding-card">
+          <p><strong>Phase 1 — Internal Data Analysis:</strong> Internal interviews with support teams to understand existing patient reports. Parallel observation of the stratification process with employees experiencing it for the first time.</p>
+        </div>
+        <div class="finding-card">
+          <p><strong>Phase 2 — Expert Interviews with Mental Health Screening Professionals:</strong> Validation and hypothesis building based on what psychology professionals had observed when applying these questionnaires to patients.</p>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Main Findings</h2>
+        <div class="finding-card">
+          <p><strong>The beginning of seeking psychological treatment is a delicate moment.</strong> Analysis of internal data alongside interviews made it evident that the initial stage of recognizing the need for therapeutic treatment is a particularly sensitive period for patients.</p>
+        </div>
+        <div class="finding-card">
+          <p><strong>Mental health assessment questions tend to evoke strong emotional responses.</strong> The questions evoke a range from anxiety and fear to satisfaction and happiness.</p>
+        </div>
+        <div class="finding-card">
+          <p><strong>The patients' greatest need is for warmth and support.</strong> Especially after receiving their results, patients needed support and care — and the current journey did not address this adequately.</p>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <div class="case-two-col">
+          <div>
+            <h2 class="case-section-title">Key Highlights</h2>
+            <ul class="highlight-list">
+              <li>Hypothesis about high risk of mental health assessments triggering negative emotions validated</li>
+              <li>Identification of key emotional trigger points in the user journey</li>
+              <li>Identification of user pain points and needs throughout this journey</li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="case-section-title">Business Outcomes</h2>
+            <ul class="highlight-list">
+              <li>Increase in consultation conversion (more targeted journey)</li>
+              <li>Increase in recurrence (mental health follow-up)</li>
+              <li>Cross-sell of other company products</li>
+              <li>Greater predictability of treatment duration</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Output</h2>
+        <p class="case-text">Based on the data collected, validated hypotheses, and insights, it was possible to rethink the experience at this stage of the journey — including improvements in verbal and visual language, addition of a CTA and scheduling flow after results, and user guidance and information at critical moments.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ CASE: SCALING ════════════ -->
+<div class="view" id="view-scaling">
+  <div class="case-page">
+    <div class="case-page-hero">
+      <button class="back-btn" onclick="showView('home')">
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 9L1 5L5 1M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to portfolio
+      </button>
+      <div class="case-page-tag">Research Ops · 2025</div>
+      <h1 class="case-page-title">Scaling UX Research: Building the Research Structure, Process and Infrastructure Across Product Design</h1>
+      <div class="case-page-meta">
+        <div class="case-page-meta-item"><div class="label">Company</div><div class="val">Dasa</div></div>
+        <div class="case-page-meta-item"><div class="label">Role</div><div class="val">UX Researcher</div></div>
+        <div class="case-page-meta-item"><div class="label">Method</div><div class="val">Research Ops</div></div>
+      </div>
+    </div>
+
+    <div class="case-page-body">
+      <div class="case-section">
+        <h2 class="case-section-title">Overview</h2>
+        <p class="case-text">I built the UX Research practice inside the Product Design team from the ground up. Before this initiative, research was fragmented, inconsistent, and lacked structure, visibility, and strategic influence. I established the operational foundation, upskilled the team, and created a scalable system that now supports evidence-based decision-making across the organization.</p>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">What I Built</h2>
+        <ul class="highlight-list" style="margin-bottom:1.5rem">
+          <li><strong>Cross-team research processes</strong> between Product Design and Product Management, ensuring research cadence within product cycles and generating strategic impact for both product direction and business outcomes</li>
+          <li><strong>Research Repository</strong> including a library of key insights, documentation of ongoing and past projects, a repository of atomic insights for cross-squad visibility, and roadmaps aligned with company OKRs</li>
+          <li><strong>A full research tooling ecosystem</strong>, configured and standardized for the team, including tools such as Maze and Dovetail</li>
+          <li><strong>A mentoring and upskilling program</strong> enabling every designer to run high-quality, end-to-end UX Research with autonomy</li>
+          <li><strong>A living knowledge base</strong> with guides, UX Research principles, and best practices for non-researchers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── View management ───
+  function showView(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const target = document.getElementById('view-' + name);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Update nav links for case pages
+      const navLinks = document.querySelectorAll('.nav-links a');
+      navLinks.forEach(a => {
+        a.onclick = name === 'home'
+          ? (e => { e.preventDefault(); scrollToSection(a.href.split('#')[1] || 'cases'); })
+          : (e => { e.preventDefault(); showView('home'); });
+      });
+    }
+  }
+
+  function showCase(id) {
+    showView(id);
+  }
+
+  function scrollToSection(id) {
+    showView('home');
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  }
+
+  // ─── Scroll effects ───
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ─── Fade-up on scroll ───
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ─── Nav links setup ───
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const href = a.getAttribute('href');
+    });
+  });
+
+  // Trigger initial fade-up check
+  setTimeout(() => {
+    document.querySelectorAll('.fade-up').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        el.classList.add('visible');
+      }
+    });
+  }, 100);
+</script>
+
+</body>
+</html>
