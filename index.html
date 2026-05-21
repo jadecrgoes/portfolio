@@ -402,7 +402,7 @@
   }
 
   .case-page-hero {
-    padding: 7rem 4rem 4rem;
+    padding: 9rem 4rem 4rem;
     border-bottom: 1px solid var(--rule);
   }
 
@@ -421,18 +421,43 @@
   .back-btn svg { transition: transform 0.2s; }
   .back-btn:hover svg { transform: translateX(-3px); }
 
-  .case-back-bar {
+  .nav-back {
+    display: none;
+    align-items: center;
+  }
+  .nav-back.visible { display: flex; }
+  .nav-links-home { display: flex; }
+  .nav-links-home.hidden { display: none; }
+
+  .breadcrumb-bar {
     position: fixed; top: 0; left: 0; right: 0; z-index: 99;
     display: none;
     align-items: center;
-    padding: 1.1rem 4rem;
-    background: rgba(245, 242, 238, 0.95);
+    padding: 0.5rem 4rem;
+    background: rgba(245, 242, 238, 0.97);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--rule);
+    transform: translateY(0);
   }
-  .case-back-bar.visible { display: flex; }
+  .breadcrumb-bar.visible { display: flex; }
+  .breadcrumb {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .breadcrumb-home {
+    cursor: pointer;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .breadcrumb-home:hover { color: var(--ink); }
+  .breadcrumb-sep { color: var(--rule); }
+  .breadcrumb-current { color: var(--ink); }
   @media (max-width: 900px) {
-    .case-back-bar { padding: 1rem 1.5rem; }
+    .breadcrumb-bar { padding: 0.5rem 1.5rem; top: 52px; }
   }
 
   .case-page-tag {
@@ -599,8 +624,8 @@
 <body>
 
 <nav id="nav">
-  <span class="nav-logo" onclick="showView('home')">Jade Goes</span>
-  <ul class="nav-links">
+  <span class="nav-logo" onclick="goHome()">Jade Goes</span>
+  <ul class="nav-links" id="navLinksHome">
     <li><a href="#" onclick="scrollToSection('cases')">Work</a></li>
     <li><a href="#" onclick="scrollToSection('about')">About</a></li>
     <li><a href="#" onclick="scrollToSection('experience')">Experience</a></li>
@@ -608,12 +633,13 @@
   </ul>
 </nav>
 
-<!-- Barra fixa de voltar (aparece nas páginas de case) -->
-<div class="case-back-bar" id="caseBackBar">
-  <button class="back-btn" onclick="goHome()">
-    <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 9L1 5L5 1M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Back to portfolio
-  </button>
+<!-- Breadcrumb bar (aparece nas páginas de case) -->
+<div class="breadcrumb-bar" id="breadcrumbBar">
+  <div class="breadcrumb">
+    <span class="breadcrumb-home" onclick="goHome()">Home</span>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current" id="breadcrumbCurrent"></span>
+  </div>
 </div>
 
 <!-- ════════════ HOME VIEW ════════════ -->
@@ -1220,7 +1246,23 @@
 </div>
 
 <script>
-  const caseBackBar = document.getElementById('caseBackBar');
+  const breadcrumbBar = document.getElementById('breadcrumbBar');
+  const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
+  const navBack = document.getElementById('navBack');
+  const navLinksHome = document.getElementById('navLinksHome');
+
+  const caseNames = {
+    csat: 'CSAT & AI Metrics',
+    onboarding: 'Conversational Onboarding',
+    cardsorting: 'Card Sorting Study',
+    mentalhealth: 'Mental Health Assessments',
+    scaling: 'Scaling UX Research'
+  };
+
+  function positionBreadcrumb() {
+    const navHeight = document.getElementById('nav').offsetHeight;
+    breadcrumbBar.style.top = navHeight + 'px';
+  }
 
   // ─── View management com History API ───
   function showView(name, pushState = true) {
@@ -1230,16 +1272,19 @@
     target.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Barra fixa de voltar
+    // Breadcrumb
     if (name === 'home') {
-      caseBackBar.classList.remove('visible');
+      breadcrumbBar.classList.remove('visible');
     } else {
-      caseBackBar.classList.add('visible');
+      breadcrumbCurrent.textContent = caseNames[name] || name;
+      positionBreadcrumb();
+      breadcrumbBar.classList.add('visible');
     }
 
     // History API
     if (pushState) {
-      const url = name === 'home' ? '/' + window.location.pathname.split('/')[1] : '#' + name;
+      const base = window.location.pathname;
+      const url = name === 'home' ? base : base + '#' + name;
       history.pushState({ view: name }, '', url);
     }
   }
