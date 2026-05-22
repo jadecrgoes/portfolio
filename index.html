@@ -769,6 +769,14 @@
         <span class="case-arrow">Read case <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </div>
 
+      <div class="case-card" onclick="showCase('smartfill')">
+        <div><span class="case-tag top">Top case</span><span class="case-tag">UI Design · Guerrilla Testing</span></div>
+        <div class="case-meta">Conexa · 2026 · 2 sprints</div>
+        <h3 class="case-title">AI-Powered Smart Fill: Designing Intelligent Suggestions for Medical Records</h3>
+        <p class="case-desc">Designed an AI suggestion interface for medical records that increased acceptance rate from 30% to 75% — balancing discoverability with cognitive load in a complex clinical environment.</p>
+        <span class="case-arrow">Read case <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+
       <div class="case-card" onclick="showCase('onboarding')">
         <div><span class="case-tag top">Top case</span><span class="case-tag">Conversational Design</span></div>
         <div class="case-meta">Conexa · 2026 · 2 sprints</div>
@@ -785,19 +793,13 @@
         <span class="case-arrow">Read case <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </div>
 
-      <div class="case-card" onclick="showCase('mentalhealth')">
-        <div><span class="case-tag">Expert Interviews · Internal Data</span></div>
+      <div class="case-card" onclick="showCase('match')">
+        <div><span class="case-tag top">Top case</span><span class="case-tag">In-depth Interviews</span></div>
         <div class="case-meta">Conexa · 2024</div>
-        <h3 class="case-title">Redesigning Strategic Mental Health Assessments</h3>
-        <p class="case-desc">Investigated how patients perceive and emotionally experience mental health assessments on a health platform, leading to a redesigned, warmer journey.</p>
+        <h3 class="case-title">Uncovering Aspects That Contribute to a Good Match Between Patient and Psychologist</h3>
+        <p class="case-desc">Led in-depth interviews with 10 patients that directly shaped new product features — including an LGBTQ+ filter that connected over 13,000 people with psychologists.</p>
         <span class="case-arrow">Read case <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </div>
-
-      <div class="case-card" onclick="showCase('scaling')">
-        <div><span class="case-tag">Research Ops</span></div>
-        <div class="case-meta">Conexa · 2025</div>
-        <h3 class="case-title">Scaling UX Research: Building the Research Structure, Process and Infrastructure</h3>
-        <p class="case-desc">Built the UX Research practice inside the Product Design team from the ground up — creating processes, a research repository, tooling ecosystem, and mentorship program.</p>
         <span class="case-arrow">Read case <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1L13 5L9 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </div>
 
@@ -1183,19 +1185,18 @@
 </div>
 
 <!-- ════════════ CASE: MENTAL HEALTH ════════════ -->
-<div class="view" id="view-mentalhealth">
+<!-- ════════════ CASE: SMART FILL ════════════ -->
+<div class="view" id="view-smartfill">
   <div class="case-page">
     <div class="case-page-hero">
-
-
-
-
-      <div class="case-page-tag">Expert Interviews · Internal Data Analysis · 2024</div>
-      <h1 class="case-page-title">Redesigning Strategic Mental Health Assessments</h1>
+      <div class="case-page-tag">Top Case · UI Design · Guerrilla Testing · 2026</div>
+      <h1 class="case-page-title">AI-Powered Smart Fill: Designing Intelligent Suggestions for Medical Records</h1>
       <div class="case-page-meta">
         <div class="case-page-meta-item"><div class="label">Company</div><div class="val">Conexa Group</div></div>
-        <div class="case-page-meta-item"><div class="label">Role</div><div class="val">UX Researcher</div></div>
-        <div class="case-page-meta-item"><div class="label">Methods</div><div class="val">Internal Data Analysis · Expert & User Interviews</div></div>
+        <div class="case-page-meta-item"><div class="label">Industry</div><div class="val">Healthcare Tech</div></div>
+        <div class="case-page-meta-item"><div class="label">Role</div><div class="val">Product Designer</div></div>
+        <div class="case-page-meta-item"><div class="label">Duration</div><div class="val">2 sprints</div></div>
+        <div class="case-page-meta-item"><div class="label">Methods</div><div class="val">UI Design · Guerrilla Testing · Handoff</div></div>
       </div>
     </div>
 
@@ -1204,101 +1205,138 @@
         <div class="case-two-col">
           <div>
             <h2 class="case-section-title">The Context</h2>
-            <p class="case-text">The company's strategic focus was the unification of platforms and mental health services. Within this context, it became essential to reconstruct the mental health stratification process to ensure a complete migration of the service while maintaining a functional journey.</p>
+            <p class="case-text">Conexa's medical record is one of the most complex and information-dense interfaces in the product. Physicians face it during every consultation — under time pressure, with multiple patients in a row — and it demands constant manual input across numerous fields.</p>
+            <p class="case-text">As part of the AI squad, the challenge was to design a feature that leverages the transcription of the video consultation to generate intelligent fill suggestions, reducing manual effort and allowing doctors to focus on clinical quality rather than documentation.</p>
           </div>
           <div>
             <h2 class="case-section-title">Main Objective</h2>
-            <p class="case-text">Understand how patients perceive, interact with, and feel when completing, tracking, and accessing their mental health assessments on the health platform — and adjust the experience to minimize negative impacts and design a warmer experience for this stage of the journey.</p>
+            <p class="case-text">Design an interface for AI-generated fill suggestions within the medical record that is <strong>visible enough to drive interaction, but subtle enough not to add cognitive load</strong> to an already saturated environment.</p>
           </div>
         </div>
       </div>
 
       <div class="case-section">
-        <h2 class="case-section-title">Methodology</h2>
-        <p class="case-text" style="margin-bottom:1.5rem">Two research phases, designed to build hypotheses cost-effectively and then validate them:</p>
+        <h2 class="case-section-title">The Design Challenge</h2>
+        <p class="case-text">The medical record layout carries an enormous volume of information and the AI suggestion feature is not the user's primary objective on the screen — yet it requires active interaction to deliver value.</p>
         <div class="finding-card">
-          <p><strong>Phase 1 — Internal Data Analysis:</strong> Internal interviews with support teams to understand existing patient reports. Parallel observation of the stratification process with employees experiencing it for the first time.</p>
-        </div>
-        <div class="finding-card">
-          <p><strong>Phase 2 — Expert Interviews with Mental Health Screening Professionals:</strong> Validation and hypothesis building based on what psychology professionals had observed when applying these questionnaires to patients.</p>
+          <p><strong>The risk was twofold:</strong> make it too prominent and it becomes noise; make it too subtle and physicians simply don't notice it. Given that the biggest pain point doctors had always reported was the sheer volume of fields and information, adding a new layer of functionality had to be done with extreme care.</p>
         </div>
       </div>
 
       <div class="case-section">
-        <h2 class="case-section-title">Main Findings</h2>
-        <div class="finding-card">
-          <p><strong>The beginning of seeking psychological treatment is a delicate moment.</strong> Analysis of internal data alongside interviews made it evident that the initial stage of recognizing the need for therapeutic treatment is a particularly sensitive period for patients.</p>
+        <h2 class="case-section-title">Design Process</h2>
+        <div class="layer-card">
+          <div class="layer-title">Prototyping</div>
+          <p>Explored different approaches to surface AI suggestions without disrupting the existing layout. The main tension was between discoverability and visual hierarchy.</p>
         </div>
-        <div class="finding-card">
-          <p><strong>Mental health assessment questions tend to evoke strong emotional responses.</strong> The questions evoke a range from anxiety and fear to satisfaction and happiness.</p>
+        <div class="layer-card">
+          <div class="layer-title">Design Critique</div>
+          <p>The prototype went through a critique session with the team, generating key discussions around suggestion placement, visual language (color, iconography, labeling), and interaction patterns for accepting or dismissing suggestions.</p>
         </div>
-        <div class="finding-card">
-          <p><strong>The patients' greatest need is for warmth and support.</strong> Especially after receiving their results, patients needed support and care — and the current journey did not address this adequately.</p>
+        <div class="layer-card">
+          <div class="layer-title">Guerrilla Testing</div>
+          <p>With limited time for formal research, I quickly recruited healthcare professionals to validate whether physicians could naturally identify, understand, and interact with the suggestions without disrupting their consultation flow.</p>
         </div>
-      </div>
-
-      <div class="case-section">
-        <div class="case-two-col">
-          <div>
-            <h2 class="case-section-title">Key Highlights</h2>
-            <ul class="highlight-list">
-              <li>Hypothesis about high risk of mental health assessments triggering negative emotions validated</li>
-              <li>Identification of key emotional trigger points in the user journey</li>
-              <li>Identification of user pain points and needs throughout this journey</li>
-            </ul>
-          </div>
-          <div>
-            <h2 class="case-section-title">Business Outcomes</h2>
-            <ul class="highlight-list">
-              <li>Increase in consultation conversion (more targeted journey)</li>
-              <li>Increase in recurrence (mental health follow-up)</li>
-              <li>Cross-sell of other company products</li>
-              <li>Greater predictability of treatment duration</li>
-            </ul>
-          </div>
+        <div class="layer-card">
+          <div class="layer-title">Handoff & Production</div>
+          <p>After refinements, the feature went through handoff to the tech team and was shipped as part of the planned medical record release.</p>
+        </div>
+        <div class="layer-card">
+          <div class="layer-title">Posthoc Research (ongoing)</div>
+          <p>With the feature live, we are now collecting quantitative data and spontaneous feedback to validate design hypotheses and measure real-world impact.</p>
         </div>
       </div>
 
       <div class="case-section">
-        <h2 class="case-section-title">Output</h2>
-        <p class="case-text">Based on the data collected, validated hypotheses, and insights, it was possible to rethink the experience at this stage of the journey — including improvements in verbal and visual language, addition of a CTA and scheduling flow after results, and user guidance and information at critical moments.</p>
+        <h2 class="case-section-title">Key Design Decisions</h2>
+        <ul class="highlight-list">
+          <li><strong>Contextual, non-intrusive placement</strong> — suggestions appear inline within each field, clearly labeled as AI-generated, without interrupting the overall layout flow</li>
+          <li><strong>Clear visual language</strong> — distinct iconography and color treatment to signal AI content, separating it from physician-authored text without adding visual clutter</li>
+          <li><strong>Low-friction interaction</strong> — accept or dismiss actions designed to be immediate and reversible, fitting into the fast-paced consultation rhythm</li>
+          <li><strong>Stateful suggestion design</strong> — suggestions render in a distinct visual state when AI-generated, and seamlessly transition to a neutral style as the physician edits, creating a clear distinction between AI-authored and physician-authored content</li>
+        </ul>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Results</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem">
+          <div class="metric-block"><div class="num">30%→75%</div><div class="desc">Suggestion acceptance rate after redesign</div></div>
+          <div class="metric-block" style="background:var(--accent-warm)"><div class="num">↓</div><div class="desc">Significant reduction in cognitive load for physicians</div></div>
+          <div class="metric-block" style="background:var(--ink)"><div class="num">↑</div><div class="desc">Positive impact on Conexa's AI product roadmap</div></div>
+        </div>
+        <div class="finding-card">
+          <p><em>"The AI today is really great! 👏👏"</em></p>
+        </div>
+        <div class="finding-card">
+          <p><em>"So far I only have compliments about the new medical record, it flowed really well here! I loved the implemented AI!"</em></p>
+        </div>
+        <div class="finding-card">
+          <p><em>"I love the AI and use it a lot."</em></p>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ════════════ CASE: SCALING ════════════ -->
-<div class="view" id="view-scaling">
+<!-- ════════════ CASE: MATCH ════════════ -->
+<div class="view" id="view-match">
   <div class="case-page">
     <div class="case-page-hero">
-
-
-
-
-      <div class="case-page-tag">Research Ops · 2025</div>
-      <h1 class="case-page-title">Scaling UX Research: Building the Research Structure, Process and Infrastructure Across Product Design</h1>
+      <div class="case-page-tag">Top Case · In-depth Interviews · 2024</div>
+      <h1 class="case-page-title">Uncovering Aspects That Contribute to a Good Match Between Patient and Psychologist</h1>
       <div class="case-page-meta">
         <div class="case-page-meta-item"><div class="label">Company</div><div class="val">Conexa Group</div></div>
         <div class="case-page-meta-item"><div class="label">Role</div><div class="val">UX Researcher</div></div>
-        <div class="case-page-meta-item"><div class="label">Method</div><div class="val">Research Ops</div></div>
+        <div class="case-page-meta-item"><div class="label">Method</div><div class="val">In-depth Interviews</div></div>
+        <div class="case-page-meta-item"><div class="label">Participants</div><div class="val">10 patients in active treatment</div></div>
       </div>
     </div>
 
     <div class="case-page-body">
       <div class="case-section">
-        <h2 class="case-section-title">Overview</h2>
-        <p class="case-text">I built the UX Research practice inside the Product Design team from the ground up. Before this initiative, research was fragmented, inconsistent, and lacked structure, visibility, and strategic influence. I established the operational foundation, upskilled the team, and created a scalable system that now supports evidence-based decision-making across the organization.</p>
+        <div class="case-two-col">
+          <div>
+            <h2 class="case-section-title">The Context</h2>
+            <p class="case-text">Aiming to impact the company's retention goals and positive clinical outcomes, the team began to focus on possible motivators to keep users engaged in treatment. From this perspective, the need arose to understand how to facilitate the formation of pairs with a higher likelihood of establishing a strong therapeutic bond — one that would result in a lasting relationship, positive outcomes, and higher conversion during the first session.</p>
+          </div>
+          <div>
+            <h2 class="case-section-title">Main Objective</h2>
+            <p class="case-text">Identify and understand the factors that lead to the establishment of an effective match between patient and psychologist, as well as the elements that help strengthen the therapeutic bond.</p>
+            <p class="case-text" style="margin-top:1rem"><strong>Methodology:</strong> In-depth interviews with 10 clients who were undergoing treatment with psychologists on the platform.</p>
+          </div>
+        </div>
       </div>
 
       <div class="case-section">
-        <h2 class="case-section-title">What I Built</h2>
-        <ul class="highlight-list" style="margin-bottom:1.5rem">
-          <li><strong>Cross-team research processes</strong> between Product Design and Product Management, ensuring research cadence within product cycles and generating strategic impact for both product direction and business outcomes</li>
-          <li><strong>Research Repository</strong> including a library of key insights, documentation of ongoing and past projects, a repository of atomic insights for cross-squad visibility, and roadmaps aligned with company OKRs</li>
-          <li><strong>A full research tooling ecosystem</strong>, configured and standardized for the team, including tools such as Maze and Dovetail</li>
-          <li><strong>A mentoring and upskilling program</strong> enabling every designer to run high-quality, end-to-end UX Research with autonomy</li>
-          <li><strong>A living knowledge base</strong> with guides, UX Research principles, and best practices for non-researchers</li>
+        <h2 class="case-section-title">Key Highlights</h2>
+        <ul class="highlight-list">
+          <li>Identification of the key aspects that bring patient and psychologist closer together</li>
+          <li>Understanding the empathic process present in the first session(s)</li>
+          <li>Differentiation and product definition for therapeutic match vs. therapeutic alliance</li>
         </ul>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Outcomes in Product</h2>
+        <p class="case-text" style="margin-bottom:1.5rem">This research directly informed the development of several new features and product evolutions across multiple squads:</p>
+        <div class="finding-card">
+          <p><strong>Truly user-centered filters</strong> — new filters that help users find psychologists that better match their individual needs, based directly on insights from the interviews.</p>
+        </div>
+        <div class="finding-card">
+          <p><strong>LGBTQ+ badge and search filter</strong> — designed based on a key insight: LGBTQ+ users often feel safer and more comfortable building therapeutic rapport with LGBTQ+ psychologists. <strong>As a result, we connected more than 13,000 people with psychologists through the LGBTQ+ filter.</strong></p>
+        </div>
+        <div class="finding-card">
+          <p><strong>First matchmaking mechanism</strong> — built as an early version of a recommendation engine to help users find psychologists who best aligned with their needs, preferences, and therapeutic goals. Currently in testing and development.</p>
+        </div>
+      </div>
+
+      <div class="case-section">
+        <h2 class="case-section-title">Business Outcomes</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
+          <div class="metric-block"><div class="num">↑</div><div class="desc">Improved User Retention Rate</div></div>
+          <div class="metric-block" style="background:var(--accent-warm)"><div class="num">13k+</div><div class="desc">People connected via LGBTQ+ filter</div></div>
+          <div class="metric-block" style="background:var(--ink)"><div class="num">↓</div><div class="desc">Reduced Treatment Dropout</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1312,10 +1350,10 @@
 
   const caseNames = {
     csat: 'CSAT & AI Metrics',
+    smartfill: 'AI Smart Fill',
     onboarding: 'Conversational Onboarding',
     cardsorting: 'Card Sorting Study',
-    mentalhealth: 'Mental Health Assessments',
-    scaling: 'Scaling UX Research'
+    match: 'Patient-Psychologist Match'
   };
 
   function positionBreadcrumb() {
